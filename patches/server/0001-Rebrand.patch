@@ -1,0 +1,109 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: CatDevz <codyquinn1122@gmail.com>
+Date: Sat, 10 Jul 2021 21:34:22 -0700
+Subject: [PATCH] Rebrand
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index e8bd6b61b1d9cbec3fe1b9003840ec6224efe036..19d08f5b25d88aeaee9b00c261e6d7147ed877ed 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -36,7 +36,7 @@ repositories {
+ }
+ 
+ dependencies {
+-    implementation(project(":Purpur-API")) // Purpur
++    implementation(project(":Phoenix-API")) // Phoenix
+     implementation("io.papermc.paper:paper-mojangapi:1.17-R0.1-SNAPSHOT") // Purpur
+     // Paper start
+     implementation("org.jline:jline-terminal-jansi:3.12.1")
+@@ -87,7 +87,7 @@ tasks.jar {
+         attributes(
+             "Main-Class" to "org.bukkit.craftbukkit.Main",
+             "Implementation-Title" to "CraftBukkit",
+-            "Implementation-Version" to "git-Purpur-$implementationVersion", // Purpur
++            "Implementation-Version" to "git-Phoenix-$implementationVersion", // Phoenix
+             "Implementation-Vendor" to SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(Date()), // Paper
+             "Specification-Title" to "Bukkit",
+             "Specification-Version" to project.version,
+@@ -154,6 +154,7 @@ tasks.shadowJar {
+     transform(ModifiedLog4j2PluginsCacheFileTransformer::class.java)
+ }
+ 
++/* Phoenix start - do not include mappings as Paperweight is broken
+ // Paper start - include reobf mappings in jar for stacktrace deobfuscation
+ abstract class IncludeMappings : BaseTask() {
+     @get:InputFile
+@@ -191,6 +192,7 @@ tasks.reobfJar {
+     inputJar.set(includeMappings.flatMap { it.outputJar })
+ }
+ // Paper end - include reobf mappings in jar for stacktrace deobfuscation
++Phoenix end - do not include mappings as Paperweight is broken */
+ 
+ tasks.test {
+     exclude("org/bukkit/craftbukkit/inventory/ItemStack*Test.class")
+diff --git a/src/main/java/com/destroystokyo/paper/console/PaperConsole.java b/src/main/java/com/destroystokyo/paper/console/PaperConsole.java
+index 8c3c68465197fafc14849dc38a572e309931e2a2..0871045811dbec7d06ecd52f7e6cf2d739d81fb7 100644
+--- a/src/main/java/com/destroystokyo/paper/console/PaperConsole.java
++++ b/src/main/java/com/destroystokyo/paper/console/PaperConsole.java
+@@ -17,7 +17,7 @@ public final class PaperConsole extends SimpleTerminalConsole {
+     @Override
+     protected LineReader buildReader(LineReaderBuilder builder) {
+         builder
+-                .appName("Purpur") // Purpur
++                .appName("Phoenix") // Phoenix
+                 .variable(LineReader.HISTORY_FILE, java.nio.file.Paths.get(".console_history"))
+                 .completer(new ConsoleCommandCompleter(this.server))
+                 .option(LineReader.Option.COMPLETE_IN_WORD, true);
+diff --git a/src/main/java/net/minecraft/server/Eula.java b/src/main/java/net/minecraft/server/Eula.java
+index 43a88bc58716eef4040584944f52893c5a47699f..80ead1300baf84adb0337ca38ae5cde024b7f088 100644
+--- a/src/main/java/net/minecraft/server/Eula.java
++++ b/src/main/java/net/minecraft/server/Eula.java
+@@ -64,7 +64,7 @@ public class Eula {
+                 try {
+                     Properties properties = new Properties();
+                     properties.setProperty("eula", "false");
+-                    properties.store(outputStream, "By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).\nYou also agree that tacos are tasty, and the best food in the world.");  // Paper - fix lag; // Tuinity - Tacos are disgusting // Purpur - no they're not
++                    properties.store(outputStream, "By changing the setting below to TRUE you are indicating your agreement to our EULA (https://account.mojang.com/documents/minecraft_eula).\nYou also agree that tacos are tasty, and one of the best foods in the world.\nOn top of all that you agree Cody (CatDevz) is the best developer in the world.");  // Paper - fix lag; // Tuinity - Tacos are disgusting // Purpur - no they're not // Phoenix - Yes, yes they are, though maybe not the *best*
+                 } catch (Throwable var5) {
+                     if (outputStream != null) {
+                         try {
+diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
+index e74ddf6b72dbd335f8a06f05341d5a4d99afa428..59b51c4bf5743975e4104624af27fdbe83d95887 100644
+--- a/src/main/java/net/minecraft/server/MinecraftServer.java
++++ b/src/main/java/net/minecraft/server/MinecraftServer.java
+@@ -1732,7 +1732,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+ 
+     @DontObfuscate
+     public String getServerModName() {
+-        return net.pl3x.purpur.PurpurConfig.serverModName; // Purpur // Tuinity // Paper // Spigot // CraftBukkit
++        return "Phoenix"; // Phoenix // Purpur // Tuinity // Paper // Spigot // CraftBukkit
+     }
+ 
+     public SystemReport fillSystemReport(SystemReport details) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+index a16f8d1c1faa5bc69a6ea5165f5e44d7e6ae35f5..e53780c8f73e971c256d1cf9252175089dea6fdf 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
+@@ -230,7 +230,7 @@ import javax.annotation.Nullable; // Paper
+ import javax.annotation.Nonnull; // Paper
+ 
+ public final class CraftServer implements Server {
+-    private final String serverName = "Purpur"; // Paper // Tuinity // Purpur
++    private final String serverName = "Phoenix"; // Paper // Tuinity // Purpur // Phoenix
+     private final String serverVersion;
+     private final String bukkitVersion = Versioning.getBukkitVersion();
+     private final Logger logger = Logger.getLogger("Minecraft");
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+index 13b98439320ac1401a920c01d7cf5a4b3a23deff..aff3503fe4295b38894cdf68fb4ec64fc7d32460 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
+@@ -11,7 +11,7 @@ public final class Versioning {
+     public static String getBukkitVersion() {
+         String result = "Unknown-Version";
+ 
+-        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/net.pl3x.purpur/purpur-api/pom.properties"); // Tuinity // Purpur
++        InputStream stream = Bukkit.class.getClassLoader().getResourceAsStream("META-INF/maven/us.phoenixnetwork.phoenix/phoenix-api/pom.properties"); // Tuinity // Purpur // Phoenix
+         Properties properties = new Properties();
+ 
+         if (stream != null) {
