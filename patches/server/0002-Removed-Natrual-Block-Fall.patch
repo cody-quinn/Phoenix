@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: CatDevz <codyquinn1122@gmail.com>
+Date: Mon, 12 Jul 2021 18:24:15 -0700
+Subject: [PATCH] Removed Natrual Block Fall
+
+
+diff --git a/src/main/java/com/destroystokyo/paper/server/ticklist/PaperTickList.java b/src/main/java/com/destroystokyo/paper/server/ticklist/PaperTickList.java
+index b4c69d39eee19339b1de295151d7ed3bf61635c1..b015c617b9ec059eede9775530c8c7c58d19a584 100644
+--- a/src/main/java/com/destroystokyo/paper/server/ticklist/PaperTickList.java
++++ b/src/main/java/com/destroystokyo/paper/server/ticklist/PaperTickList.java
+@@ -15,6 +15,7 @@ import net.minecraft.world.level.ChunkPos;
+ import net.minecraft.world.level.ServerTickList;
+ import net.minecraft.world.level.TickNextTickData;
+ import net.minecraft.world.level.TickPriority;
++import net.minecraft.world.level.block.FallingBlock;
+ import net.minecraft.world.level.block.state.BlockState;
+ import net.minecraft.world.level.levelgen.structure.BoundingBox;
+ import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+@@ -425,6 +426,11 @@ public final class PaperTickList<T> extends ServerTickList<T> { // extend to avo
+     }
+ 
+     public void schedule(final BlockPos pos, final T data, final long targetTick, final TickPriority priority) {
++        // Phoenix start
++        if (data instanceof FallingBlock)
++            return;
++        // Phoenix end
++
+         final TickNextTickData<T> entry = new TickNextTickData<>(pos, data, targetTick, priority);
+         if (this.excludeFromScheduling.test(entry.getType())) {
+             return;
+diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
+index 42c9952ee868fa54d9b6f2db8e08e3bc2a9b18de..5cfe54abd0f60677e6c61ec29afcb03974eda55d 100644
+--- a/src/main/java/net/minecraft/world/level/Level.java
++++ b/src/main/java/net/minecraft/world/level/Level.java
+@@ -51,6 +51,7 @@ import net.minecraft.world.level.biome.BiomeManager;
+ import net.minecraft.world.level.block.BaseFireBlock;
+ import net.minecraft.world.level.block.Block;
+ import net.minecraft.world.level.block.Blocks;
++import net.minecraft.world.level.block.FallingBlock;
+ import net.minecraft.world.level.block.entity.BlockEntity;
+ import net.minecraft.world.level.block.entity.TickingBlockEntity;
+ import net.minecraft.world.level.block.state.BlockState;
+@@ -732,6 +733,11 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+             if ((i & 16) == 0 && j > 0) {
+                 int k = i & -34;
+ 
++                // Phoenix Begin
++                if (oldBlock.getBlock() instanceof FallingBlock)
++                    return;
++                // Phoenix End
++
+                 // CraftBukkit start
+                 iblockdata1.updateIndirectNeighbourShapes(this, blockposition, k, j - 1); // Don't call an event for the old block to limit event spam
+                 CraftWorld world = ((ServerLevel) this).getWorld();
