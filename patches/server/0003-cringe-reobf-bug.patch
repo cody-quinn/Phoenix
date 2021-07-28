@@ -1,0 +1,46 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: CatDevz <codyquinn1122@gmail.com>
+Date: Tue, 27 Jul 2021 19:55:50 -0700
+Subject: [PATCH] cringe-reobf-bug
+
+
+diff --git a/src/main/java/net/minecraft/core/BlockPos.java b/src/main/java/net/minecraft/core/BlockPos.java
+index 30a4b80eacf76ad7f0a48b79bcf01b752c0af48a..3b4d0d9b1ef7a712a06b9b015ba55b7173fd739c 100644
+--- a/src/main/java/net/minecraft/core/BlockPos.java
++++ b/src/main/java/net/minecraft/core/BlockPos.java
+@@ -484,9 +484,9 @@ public class BlockPos extends Vec3i {
+         }
+ 
+         public BlockPos.MutableBlockPos set(int x, int y, int z) {
+-            this.x = x; // Tuinity - force inline
+-            this.y = y; // Tuinity - force inline
+-            this.z = z; // Tuinity - force inline
++            ((Vec3i) this).x = x; // Phoenix - Weird...// Tuinity - force inline
++            ((Vec3i) this).y = y; // Phoenix - Weird...// Tuinity - force inline
++            ((Vec3i) this).z = z; // Phoenix - Weird...// Tuinity - force inline
+             return this;
+         }
+ 
+@@ -550,19 +550,19 @@ public class BlockPos extends Vec3i {
+         // Paper start - comment out useless overrides @Override - TODO figure out why this is suddenly important to keep
+         @Override
+         public BlockPos.MutableBlockPos setX(int i) {
+-            this.x = i; // Tuinity
++            ((Vec3i) this).x = i; // Phoenix - Weird bug idk // Tuinity
+             return this;
+         }
+ 
+         @Override
+         public BlockPos.MutableBlockPos setY(int i) {
+-            this.y = i; // Tuinity
++            ((Vec3i) this).y = i; // Phoenix - Weird bug idk // Tuinity
+             return this;
+         }
+ 
+         @Override
+         public BlockPos.MutableBlockPos setZ(int i) {
+-            this.z = i; // Tuinity
++            ((Vec3i) this).z = i; // Phoenix - Weird bug idk // Tuinity
+             return this;
+         }
+         // Paper end
