@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: CatDevz <codyquinn1122@gmail.com>
+Date: Mon, 2 Aug 2021 19:13:31 -0700
+Subject: [PATCH] Re-Enabled "online-mode" startup parameter
+
+
+diff --git a/src/main/java/net/minecraft/server/dedicated/Settings.java b/src/main/java/net/minecraft/server/dedicated/Settings.java
+index 745a6735fba8343329ec31723da914fad16ae134..9e2a89aaf5b4e19f528310003e4dfb748ab06104 100644
+--- a/src/main/java/net/minecraft/server/dedicated/Settings.java
++++ b/src/main/java/net/minecraft/server/dedicated/Settings.java
+@@ -33,7 +33,7 @@ public abstract class Settings<T extends Settings<T>> {
+     }
+ 
+     private String getOverride(String name, String value) {
+-        if ((this.options != null) && (this.options.has(name)) && !name.equals( "online-mode")) { // Spigot
++        if ((this.options != null) && (this.options.has(name))) { // Spigot // Phoenix - Stupid change spigot
+             return String.valueOf(this.options.valueOf(name));
+         }
+ 
